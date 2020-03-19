@@ -38,4 +38,33 @@ app.post("/api/users", jsonParser, (req, res) => {
     res.send(user);
 });
 
+app.delete("/api/users/:id", (req, res) => {      
+    const id = req.params.id;
+    let data = fs.readFileSync('data.json', 'utf8');
+    let users = JSON.parse(data);
+    let index = -1;
+    // находим индекс пользователя в массиве
+    for (let i = 0; i < users.length; i++) {
+        
+        if (users[i].id === +id) {
+            index = i;
+            
+            break;
+        }
+    }
+    if (index > -1) {
+        // удаляем пользователя из массива по индексу
+        user = users.splice(index, 1)[0];
+        data = JSON.stringify(users);
+        fs.writeFileSync('data.json', data);
+        // отправляем удаленного пользователя
+        res.send(user);
+    }
+    else {
+        res.status(404).send();
+    }
+});
 
+app.listen(3000, function () {
+    console.log('север дует на http://localhost:3000');
+});
