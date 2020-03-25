@@ -1,39 +1,54 @@
 const service = require('../services/user-service')
-class UserController {
-    constructor() {}
+const colors = require('colors')
 
-    addUser = (req, res) => {
+class UserController {
+    constructor () {}
+    addUser = async (req, res) => {
         try {
-            const result = service.add(req)
+            const result = await service.add(req.body)
             res.status(201).send(result)
+            
+            console.log(req.method.yellow, req.url)
         } catch (e) {
             res.status(400).send({error:e.message})
         }
     }
-    deleteUser = (req, res) => {
+    deleteUser = async (req, res) => {
         try {
-            const result = service.del(req)
+            const result = await service.del(req.params.id)
             res.status(201).send(result)
+            console.log(req.method.red, req.url)
         } catch (e) {
             res.status(400).send({error: e.message})
         }
     }
-    updateUser = (req, res) => {
+    updateUser = async (req, res) => {
         try {
-            const result = service.update(req)
+            const result = await service.update(req.body)
             res.status(201).send(result)
+            console.log(req.method.blue, req.url)
         } catch (e) {
             res.status(400).send({error: e.message})
         }
-    }
+    }    
     getUser = async (req, res) => {
         try {
-            const result = await service.get()
+            const result = await service.get(req.params.id)
             res.send(result)
+            console.log(req.method.green, req.url)
         } catch (e) {
             res.status(400).send({error:e.message})
         }
     }
+    getAllUser = async (req, res) => {
+        try {
+            const result = await service.getAll()
+            res.send(result)
+            console.log(req.method.green, req.url)
+        } catch (e) {
+            res.status(400).send({error:e.message})
+        }
+    }    
 }
 
 module.exports = UserController;
