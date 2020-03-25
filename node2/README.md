@@ -8,4 +8,4 @@
 * PUT
 * DELETE
 
-![console]('./assets/readme1.jpg')
+![console]('assets/readme1.jpg')
