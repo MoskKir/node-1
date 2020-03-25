@@ -7,3 +7,5 @@
 * POST
 * PUT
 * DELETE
+
+![console]('./assets/readme1.jpg')
